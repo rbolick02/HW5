@@ -1,0 +1,32 @@
+% Ryne Bolick
+% 1218701146
+
+t = [0 1 2 3 4];
+y = [0 3 2 0.5 0];
+Tau = length(t)-1;
+[kp, Ak Bk] = DFT(t,y);
+fk = kp/Tau;
+T = linspace(t(1),2*t(length(t)),1000);
+Y = zeros([1 length(T)]);
+
+for i = 1:length(kp)
+        Y = Y + Ak(i)*sin(2*pi*fk(i)*T) + Bk(i)*cos(2*pi*fk(i)*T);
+end
+
+figure(1)
+stem(fk,Ak)
+title('Sine Plot')
+xlabel('Frequency')
+ylabel('Ak')
+
+figure(2)
+stem(fk,Bk)
+title('Cosine Plot')
+xlabel('Frequency')
+ylabel('Bk')
+
+
+AK = Ak'; BK = Bk'
+table(AK,BK)
+
+display 'Dominant frequncy occurs at 25Hz due to largest amplitude on plotted sine and cosine graphs at varying frequencies'
